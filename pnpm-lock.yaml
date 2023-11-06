@@ -7,6 +7,9 @@ dependencies:
   '@tanstack/react-router':
     specifier: 0.0.1-beta.205
     version: 0.0.1-beta.205(react-dom@18.2.0)(react@18.2.0)
+  electron-drag-window:
+    specifier: ^0.1.2
+    version: 0.1.2
   lucide-react:
     specifier: ^0.292.0
     version: 0.292.0(react@18.2.0)
@@ -929,6 +932,7 @@ packages:
   /@xmldom/xmldom@0.8.10:
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
     engines: {node: '>=10.0.0'}
+    requiresBuild: true
     dev: true
 
   /acorn-jsx@5.3.2(acorn@8.11.2):
@@ -1102,6 +1106,7 @@ packages:
 
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    requiresBuild: true
     dev: true
 
   /binary-extensions@2.2.0:
@@ -1537,6 +1542,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /electron-drag-window@0.1.2:
+    resolution: {integrity: sha512-tX3j3BTUeRg7xXhjQLTDoVOYO+ZLfFLxSSsDpoUDX6YEUaQxLyvvdnZtQY3RH5Dxphj4Ar8vCxceBjXWsOpMtQ==}
+    dev: false
 
   /electron-publish@24.5.0:
     resolution: {integrity: sha512-zwo70suH15L15B4ZWNDoEg27HIYoPsGJUF7xevLJLSI7JUPC8l2yLBdLGwqueJ5XkDL7ucYyRZzxJVR8ElV9BA==}
@@ -3294,6 +3303,7 @@ packages:
   /xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
     engines: {node: '>=8.0'}
+    requiresBuild: true
     dev: true
 
   /y18n@5.0.8:

@@ -3,13 +3,14 @@ import { ICON_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
 import createSideTrigger from "./features/side-trigger";
 import { LOAD_URL } from "./libs/utils";
-
+import { onWindowDrag } from "electron-drag-window/electron"
 
 export default class App {
   mainBrowserWindow: BrowserWindow | null = null;
 
   constructor() {
     this.beforeReady();
+    this.onMessage();
 
     app.whenReady().then(() => {
       this.createMainWindow();
@@ -34,7 +35,7 @@ export default class App {
             label: "退出",
             click: () => {
               app.exit();
-            }
+            },
           },
         ],
       });
@@ -52,15 +53,19 @@ export default class App {
       app.quit();
     });
 
-    app.on("second-instance", () => {
-      if (!this.mainBrowserWindow) return;
+    // app.on("second-instance", () => {
+    //   if (!this.mainBrowserWindow) return;
 
-      if (this.mainBrowserWindow.isMinimized()) {
-        this.mainBrowserWindow.restore();
-      }
+    //   if (this.mainBrowserWindow.isMinimized()) {
+    //     this.mainBrowserWindow.restore();
+    //   }
 
-      this.mainBrowserWindow.focus();
-    });
+    //   this.mainBrowserWindow.focus();
+    // });
+  }
+
+  onMessage() {
+    onWindowDrag()
   }
 
   createMainWindow() {

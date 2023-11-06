@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
     "@tanstack/react-router": "0.0.1-beta.205",
+    "electron-drag-window": "^0.1.2",
     "lucide-react": "^0.292.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

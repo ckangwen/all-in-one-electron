@@ -11,8 +11,8 @@ export default function createSideTrigger() {
     const currentDisplay = screen.getDisplayNearestPoint({ x, y });
 
     win = new BrowserWindow({
-      x: currentDisplay.workArea.width - winWidth,
       icon: ICON_PATH,
+      x: currentDisplay.workArea.width - winWidth,
       y: 100,
       title: "SideTrigger",
       type: "toolbar",
@@ -21,7 +21,7 @@ export default function createSideTrigger() {
       resizable: false,
       movable: false,
       frame: false,
-      // alwaysOnTop: true,
+      alwaysOnTop: true,
       fullscreenable: false,
       minimizable: false,
       maximizable: false,
