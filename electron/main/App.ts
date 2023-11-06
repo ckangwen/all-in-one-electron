@@ -43,24 +43,24 @@ export default class App {
 
   beforeReady() {
     app.disableHardwareAcceleration();
-    // if (!app.requestSingleInstanceLock()) {
-    //   app.quit();
-    //   process.exit(0);
-    // }
+    if (!app.requestSingleInstanceLock()) {
+      app.quit();
+      process.exit(0);
+    }
 
-    // app.on("window-all-closed", () => {
-    //   app.quit();
-    // });
+    app.on("window-all-closed", () => {
+      app.quit();
+    });
 
-    // app.on("second-instance", () => {
-    //   if (!this.mainBrowserWindow) return;
+    app.on("second-instance", () => {
+      if (!this.mainBrowserWindow) return;
 
-    //   if (this.mainBrowserWindow.isMinimized()) {
-    //     this.mainBrowserWindow.restore();
-    //   }
+      if (this.mainBrowserWindow.isMinimized()) {
+        this.mainBrowserWindow.restore();
+      }
 
-    //   this.mainBrowserWindow.focus();
-    // });
+      this.mainBrowserWindow.focus();
+    });
   }
 
   createMainWindow() {

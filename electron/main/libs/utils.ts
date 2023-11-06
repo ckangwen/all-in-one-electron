@@ -1,5 +1,6 @@
 import { INDEX_HTML_PATH } from "./filepath";
+import { app } from "electron";
 
-export const isProd = process.env.NODE_ENV === "production";
-
-export const LOAD_URL = isProd ? `file://${INDEX_HTML_PATH}` : "http://localhost:3333";
+export const LOAD_URL = app.isPackaged
+  ? `file://${INDEX_HTML_PATH}`
+  : "http://localhost:3333";
