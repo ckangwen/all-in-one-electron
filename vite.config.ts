@@ -16,6 +16,7 @@ export default defineConfig(({ command }) => {
     resolve: {
       alias: {
         "@": join(__dirname, "src"),
+        "~electron-utils": join(__dirname, "electron-utils"),
       },
     },
     plugins: [

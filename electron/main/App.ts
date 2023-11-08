@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from "electron";
+import { onNotify } from "../../electron-utils/notification/main"
 import { ICON_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
 import createSideTrigger from "./features/side-trigger";
@@ -65,7 +66,8 @@ export default class App {
   }
 
   onMessage() {
-    onWindowDrag()
+    onWindowDrag();
+    onNotify();
   }
 
   createMainWindow() {

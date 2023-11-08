@@ -1,6 +1,5 @@
 import { Menu, Tray } from "electron";
-import { ICON_PATH, PUBLIC_PATH } from "./filepath"
-import { join } from 'path';
+import { ICON_PATH } from "./filepath"
 interface CreateTrayOptions {
   iconPath?: string;
   menus: Electron.MenuItemConstructorOptions[];
