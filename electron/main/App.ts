@@ -1,11 +1,10 @@
 import { app, BrowserWindow, screen } from "electron";
-import { onNotify } from "../../electron-utils/notification/main"
-import { ignoreMouseEvents } from "../../electron-utils/window/main"
+import { onNotify } from "../../electron-utils/notification/main";
+import { ignoreMouseEvents } from "../../electron-utils/window/main";
 import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
-import createSideTrigger from "./features/side-trigger";
 import { LOAD_URL } from "./libs/utils";
-import { onWindowDrag } from "electron-drag-window/electron"
+import { onWindowDrag } from "electron-drag-window/electron";
 
 export default class App {
   mainBrowserWindow: BrowserWindow | null = null;
@@ -16,25 +15,25 @@ export default class App {
 
     app.whenReady().then(() => {
       this.createMainWindow();
-      const sideTriggerWin = createSideTrigger();
+      ignoreMouseEvents(this.mainBrowserWindow!);
 
       createTray({
         menus: [
           {
-            label: "显示 Side Trigger",
+            label: "Show Window",
             click: () => {
-              sideTriggerWin.show();
+              this.mainBrowserWindow?.show();
             },
           },
           {
-            label: "隐藏 Side Trigger",
+            label: "Hide Window",
             click: () => {
-              sideTriggerWin.hide();
+              this.mainBrowserWindow?.hide();
             },
           },
           { type: "separator" },
           {
-            label: "退出",
+            label: "Exit",
             click: () => {
               app.exit();
             },
@@ -55,12 +54,7 @@ export default class App {
       app.quit();
     });
 
-    app.setAppUserModelId("Revealing")
-  }
-
-  onMessage() {
-    onWindowDrag();
-    onNotify(ICON_PATH);
+    app.setAppUserModelId("Revealing");
   }
 
   createMainWindow() {
@@ -85,8 +79,11 @@ export default class App {
       },
     });
     this.mainBrowserWindow = mainWindow;
-    ignoreMouseEvents(mainWindow);
-
     mainWindow.loadURL(LOAD_URL);
+  }
+
+  onMessage() {
+    onWindowDrag();
+    onNotify(ICON_PATH);
   }
 }
