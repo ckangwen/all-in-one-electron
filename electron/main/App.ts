@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, screen } from "electron";
 import { onNotify } from "../../electron-utils/notification/main"
-import { ICON_PATH } from "./libs/filepath";
+import { ignoreMouseEvents } from "../../electron-utils/window/main"
+import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
 import createSideTrigger from "./features/side-trigger";
 import { LOAD_URL } from "./libs/utils";
@@ -54,33 +55,37 @@ export default class App {
       app.quit();
     });
 
-    // app.on("second-instance", () => {
-    //   if (!this.mainBrowserWindow) return;
-
-    //   if (this.mainBrowserWindow.isMinimized()) {
-    //     this.mainBrowserWindow.restore();
-    //   }
-
-    //   this.mainBrowserWindow.focus();
-    // });
+    app.setAppUserModelId("Revealing")
   }
 
   onMessage() {
     onWindowDrag();
-    onNotify();
+    onNotify(ICON_PATH);
   }
 
   createMainWindow() {
+    const { x, y } = screen.getCursorScreenPoint();
+    const currentDisplay = screen.getDisplayNearestPoint({ x, y });
+    const sideGap = 200;
+
     const mainWindow = new BrowserWindow({
-      title: "All in one Electron",
+      title: "Revealing",
       icon: ICON_PATH,
+      y: 0,
+      x: sideGap,
+      width: currentDisplay.workArea.width - sideGap * 2,
+      transparent: true,
+      alwaysOnTop: true,
+      frame: false,
       webPreferences: {
+        preload: PRELOAD_PATH,
         nodeIntegration: true,
         contextIsolation: false,
         webSecurity: false,
       },
     });
     this.mainBrowserWindow = mainWindow;
+    ignoreMouseEvents(mainWindow);
 
     mainWindow.loadURL(LOAD_URL);
   }
