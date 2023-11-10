@@ -2,11 +2,11 @@ import * as React from "react";
 import { ipcRenderer } from "electron";
 import { WindowChannels } from "./types";
 
-interface EnableMouseEvents extends React.HTMLAttributes<HTMLDivElement> {}
+interface ClickableProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const EnableMouseEvents = React.forwardRef<
+export const Clickable = React.forwardRef<
   HTMLDivElement,
-  EnableMouseEvents
+  ClickableProps
 >((props, ref) => {
   const onMouseEnter: React.MouseEventHandler<HTMLDivElement> = (e) => {
     ipcRenderer.send(WindowChannels.SET_IGNORE_MOUSE_EVENTS, false);

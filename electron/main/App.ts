@@ -1,10 +1,10 @@
-import { app, BrowserWindow, screen } from "electron";
+import { app, BrowserWindow } from "electron";
 import { onNotify } from "../../electron-utils/notification/main";
 import { ignoreMouseEvents } from "../../electron-utils/window/main";
+import { onWindowDrag } from "../../electron-utils/drag/main";
 import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
-import { LOAD_URL } from "./libs/utils";
-import { onWindowDrag } from "electron-drag-window/electron";
+import { getCurrentDisplay, LOAD_URL } from "./libs/utils";
 
 export default class App {
   mainBrowserWindow: BrowserWindow | null = null;
@@ -58,16 +58,15 @@ export default class App {
   }
 
   createMainWindow() {
-    const { x, y } = screen.getCursorScreenPoint();
-    const currentDisplay = screen.getDisplayNearestPoint({ x, y });
-    const sideGap = 200;
+    const currentDisplay = getCurrentDisplay();
 
     const mainWindow = new BrowserWindow({
       title: "Revealing",
       icon: ICON_PATH,
       y: 0,
-      x: sideGap,
-      width: currentDisplay.workArea.width - sideGap * 2,
+      x: 0,
+      width: currentDisplay.workArea.width,
+      height: currentDisplay.workArea.height,
       transparent: true,
       alwaysOnTop: true,
       frame: false,
