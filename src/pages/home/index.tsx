@@ -52,7 +52,7 @@ function Page() {
       <Draggable
         className="absolute w-[100px] h-[100px] bg-white flex justify-center items-end text-slate10"
       >
-        Hello
+        你好世界
       </Draggable>
 
       <Clickable>
