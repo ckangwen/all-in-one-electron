@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserView, BrowserWindow } from "electron";
 import { onNotify } from "../../electron-utils/notification/main";
 import { ignoreMouseEvents } from "../../electron-utils/window/main";
 import { onWindowDrag } from "../../electron-utils/drag/main";
@@ -67,8 +67,13 @@ export default class App {
       x: 0,
       width: currentDisplay.workArea.width,
       height: currentDisplay.workArea.height,
+      // https://github.com/electron/electron/issues/611
+      // 设置 resizable 为 false
+      // 否则如果有元素紧贴窗口边缘，那么鼠标移动到边缘时，无法检测到
+      resizable: false,
       transparent: true,
       alwaysOnTop: true,
+      skipTaskbar: true,
       frame: false,
       webPreferences: {
         preload: PRELOAD_PATH,
@@ -78,6 +83,7 @@ export default class App {
       },
     });
     this.mainBrowserWindow = mainWindow;
+    bingSetup(mainWindow.webContents);
     mainWindow.loadURL(LOAD_URL);
   }
 
@@ -85,4 +91,39 @@ export default class App {
     onWindowDrag();
     onNotify(ICON_PATH);
   }
+}
+
+function bingSetup(content: BrowserView["webContents"]) {
+  // 跨域处理
+  content.session.webRequest.onBeforeSendHeaders((details, callback) => {
+    callback({
+      requestHeaders: { Origin: "*", ...details.requestHeaders },
+    });
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content.session.webRequest.onHeadersReceived((details: any, callback) => {
+    if (details.responseHeaders["X-Frame-Options"]) {
+      delete details.responseHeaders["X-Frame-Options"];
+    } else if (details.responseHeaders["x-frame-options"]) {
+      delete details.responseHeaders["x-frame-options"];
+    }
+    if (details.responseHeaders["Content-Security-Policy"]) {
+      delete details.responseHeaders["Content-Security-Policy"];
+    } else if (details.responseHeaders["content-security-policy"]) {
+      delete details.responseHeaders["content-security-policy"];
+    }
+    if (details.responseHeaders["access-control-allow-origin"]) {
+      delete details.responseHeaders["access-control-allow-origin"];
+    } //这一句
+    if (details.responseHeaders["access-control-allow-credentials"]) {
+      delete details.responseHeaders["access-control-allow-credentials"];
+    } //这一句
+    callback({
+      responseHeaders: {
+        "Access-Control-Allow-Origin": ["*"],
+        ...details.responseHeaders,
+      },
+    });
+  });
 }
