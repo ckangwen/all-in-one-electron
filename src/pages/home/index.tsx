@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Clickable } from "~electron-utils/window/renderer";
-import "./index.css";
 import Menubar from "./Menubar";
+import "./index.css";
 
 function Page() {
 
