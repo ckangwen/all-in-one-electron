@@ -5,6 +5,7 @@ import { onWindowDrag } from "../../electron-utils/drag/main";
 import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
 import { getCurrentDisplay, LOAD_URL } from "./libs/utils";
+import { onExternalUrlOpen } from '../../electron-utils/shell/main';
 
 export default class App {
   mainBrowserWindow: BrowserWindow | null = null;
@@ -82,6 +83,7 @@ export default class App {
         webSecurity: false,
       },
     });
+
     this.mainBrowserWindow = mainWindow;
     bingSetup(mainWindow.webContents);
     mainWindow.loadURL(LOAD_URL);
@@ -90,6 +92,7 @@ export default class App {
   onMessage() {
     onWindowDrag();
     onNotify(ICON_PATH);
+    onExternalUrlOpen();
   }
 }
 
