@@ -64,8 +64,8 @@ export default class App {
     const mainWindow = new BrowserWindow({
       title: "Revealing",
       icon: ICON_PATH,
-      y: 0,
-      x: 0,
+      y: currentDisplay.workArea.y,
+      x: currentDisplay.workArea.x,
       width: currentDisplay.workArea.width,
       height: currentDisplay.workArea.height,
       // https://github.com/electron/electron/issues/611
