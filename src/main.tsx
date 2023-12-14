@@ -1,12 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { RouterProvider } from "react-router-dom"
-// import { RouterProvider } from "@tanstack/react-router"
-import router from "@/router"
-import './index.css'
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+import { TrpcProvider } from "@revealing/trpc/react";
+import router from "@/router";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
-  </React.StrictMode>,
-)
+    <TrpcProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </TrpcProvider>
+  </React.StrictMode>
+);

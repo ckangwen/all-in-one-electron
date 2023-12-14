@@ -1,0 +1,1 @@
+export { createIPCHandler } from "electron-trpc/main";

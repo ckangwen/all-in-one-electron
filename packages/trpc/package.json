@@ -1,0 +1,14 @@
+{
+  "name": "@revealing/trpc",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@revealing/api": "workspace:*",
+    "electron-trpc": "^0.5.2",
+    "@trpc/client": "10.33.1",
+    "@trpc/react-query": "^10.44.1"
+  }
+}
