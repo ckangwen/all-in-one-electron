@@ -1,13 +1,10 @@
 import { app, BrowserView, BrowserWindow } from "electron";
-import { onNotify } from "../../electron-utils/notification/main";
-import { ignoreMouseEvents } from "../../electron-utils/window/main";
-import { onWindowDrag } from "../../electron-utils/drag/main";
+import { ignoreMouseEvents, onWindowDrag, onExternalUrlOpen } from "@revealing/electron/main"
+import { createIPCHandler } from "@revealing/trpc/main";
+import { appRouter } from "@revealing/api";
 import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
 import createTray from "./libs/createTray";
 import { getCurrentDisplay, LOAD_URL } from "./libs/utils";
-import { onExternalUrlOpen } from "../../electron-utils/shell/main";
-import { createIPCHandler } from "@revealing/trpc/main";
-import { appRouter } from "@revealing/api";
 
 export default class App {
   mainBrowserWindow: BrowserWindow | null = null;
@@ -98,7 +95,6 @@ export default class App {
 
   onMessage() {
     onWindowDrag();
-    onNotify(ICON_PATH);
     onExternalUrlOpen();
   }
 }

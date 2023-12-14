@@ -7,7 +7,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { trpcReact } from "packages/trpc/renderer";
+import { trpcReact } from "@revealing/trpc/renderer";
 
 export default function Setting() {
   const { data } = trpcReact.siYuan.randomBookmark.useQuery();

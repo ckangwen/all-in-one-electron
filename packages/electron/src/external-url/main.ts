@@ -1,8 +1,8 @@
 import { ipcMain, shell } from "electron";
-import { ShellEvents } from "./types";
+import { EXTERNAL_URL_CHANNELS } from "./types";
 
 export function onExternalUrlOpen() {
-  ipcMain.on(ShellEvents.OPEN_EXTERNAL, (_e, url) => {
+  ipcMain.on(EXTERNAL_URL_CHANNELS.OPEN_URL, (_e, url) => {
     shell.openExternal(url);
   });
 }

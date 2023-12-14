@@ -1,5 +1,5 @@
 import { BrowserWindow, ipcMain, screen } from "electron"
-import { DragEvents, WindowConfigMapParams } from "./types"
+import { DRAG_CHANNELS, WindowConfigMapParams } from "./types"
 
 const WindowConfigMap = new Map<Electron.IpcMainEvent['processId'], WindowConfigMapParams>()
 
@@ -7,7 +7,7 @@ const getWindowByProcessId = (processId: Electron.IpcMainEvent['processId']) => 
 
 export const onWindowDrag = () => {
   ipcMain.on(
-    DragEvents.DRAG_START,
+    DRAG_CHANNELS.DRAG_START,
     function (e, params: { mouseX: number; mouseY: number; }) {
       const processId = e.processId
       const win = getWindowByProcessId(processId)
@@ -28,7 +28,7 @@ export const onWindowDrag = () => {
   );
 
   ipcMain.on(
-    DragEvents.DRAGGING,
+    DRAG_CHANNELS.DRAGGING,
     function (e) {
       const processId = e.processId
 
@@ -65,7 +65,7 @@ export const onWindowDrag = () => {
   );
 
   ipcMain.on(
-    DragEvents.DRAG_OVER,
+    DRAG_CHANNELS.DRAG_OVER,
     function (e) {
       WindowConfigMap.delete(e.processId)
     }

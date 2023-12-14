@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
-import { DragEvents, useMoveWindowOptions } from "./types";
-import { MouseEventHandler } from "react";
+import { DRAG_CHANNELS, MoveWindowOptions } from "./types";
+import type { MouseEventHandler } from "react";
 
 export const IGNORE_DRAG_CLASS_NAME = "ignoreMove";
 
@@ -26,7 +26,7 @@ const checkDomIgnore = (
   return has;
 };
 
-export const createWindowDragHandler = (options?: useMoveWindowOptions) => {
+export const createWindowDragHandler = (options?: MoveWindowOptions) => {
   const { igClassNames = [IGNORE_DRAG_CLASS_NAME], igTagNames = ["INPUT"] } =
     options || {};
 
@@ -39,7 +39,7 @@ export const createWindowDragHandler = (options?: useMoveWindowOptions) => {
       return;
     }
 
-    ipcRenderer.send(DragEvents.DRAGGING);
+    ipcRenderer.send(DRAG_CHANNELS.DRAGGING);
     animationId = requestAnimationFrame(onMoveWindow);
   };
 
@@ -50,14 +50,14 @@ export const createWindowDragHandler = (options?: useMoveWindowOptions) => {
     }
 
     const [mouseX, mouseY] = [e.clientX, e.clientY];
-    ipcRenderer.send(DragEvents.DRAG_START, { mouseX, mouseY });
+    ipcRenderer.send(DRAG_CHANNELS.DRAG_START, { mouseX, mouseY });
     document.addEventListener("mouseup", onMouseUp);
     dragging = true;
     onMoveWindow();
   };
 
   const onMouseUp = () => {
-    ipcRenderer.send(DragEvents.DRAG_OVER);
+    ipcRenderer.send(DRAG_CHANNELS.DRAG_OVER);
     dragging = false;
     document.removeEventListener("mouseup", onMouseUp);
     cancelAnimationFrame(animationId);

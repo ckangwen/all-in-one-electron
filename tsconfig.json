@@ -24,9 +24,6 @@
       "@/*": [
         "src/*"
       ],
-      "~electron-utils/*": [
-        "electron-utils/*"
-      ]
     },
   },
   "include": ["src", "electron", "packages"],

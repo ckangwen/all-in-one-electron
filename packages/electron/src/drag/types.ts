@@ -1,4 +1,4 @@
-export interface useMoveWindowOptions {
+export interface MoveWindowOptions {
   igClassNames?: string[];
   igTagNames?: Element["tagName"][];
 }
@@ -23,7 +23,7 @@ export interface WindowConfigMapParams {
   height: number;
 }
 
-export enum DragEvents {
+export enum DRAG_CHANNELS {
   DRAG_START = "@revealing/drag-start",
   DRAGGING = "@revealing/dragging",
   DRAG_OVER = "@revealing/drag-over",

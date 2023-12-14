@@ -1,4 +1,4 @@
-import { Clickable } from "~electron-utils/window/renderer";
+import { Clickable } from "@revealing/electron/renderer";
 import { cn } from "@/libs/utils";
 import Setting from "./Setting"
 
