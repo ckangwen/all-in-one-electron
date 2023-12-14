@@ -1,12 +1,5 @@
 import { Settings2 } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { trpcReact } from "@revealing/trpc/renderer";
 
 export default function Setting() {
@@ -22,10 +15,6 @@ export default function Setting() {
         </div>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader className="mb-2">
-          <SheetTitle>title</SheetTitle>
-        </SheetHeader>
-        <Separator />
         <div className="mt-3">Hello World</div>
       </SheetContent>
     </Sheet>
