@@ -21,7 +21,6 @@ export function ignoreMouseEvents(defaultWindow: BrowserWindow) {
   });
 
   defaultWindow.on("focus", () => {
-    console.log("focus, can click");
     defaultWindow.setIgnoreMouseEvents(false);
   });
 }
