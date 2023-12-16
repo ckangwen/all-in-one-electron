@@ -1,0 +1,17 @@
+{
+  "name": "@revealing/db",
+  "version": "0.1.0",
+  "scripts": {
+    "migrate": "tsx migrate.ts",
+    "seed": "tsx seed.ts",
+    "generate": "drizzle-kit generate:mysql",
+    "studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.29.1",
+    "mysql2": "^3.6.5"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.6"
+  }
+}
