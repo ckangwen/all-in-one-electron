@@ -1,9 +1,10 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Tray } from "electron";
 import { createIPCHandler } from "@revealing/trpc/main";
 import {
   ignoreMouseEvents,
   onExternalUrlOpen,
   onWindowDrag,
+  registerUrlScheme,
 } from "@revealing/electron/main";
 import { appRouter } from "@revealing/api";
 import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
@@ -22,7 +23,7 @@ if (!app.requestSingleInstanceLock()) {
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 let mainBrowserWindow: BrowserWindow | null = null;
-
+let mainTray: Tray | null = null;
 function createMainWindow() {
   const currentDisplay = getCurrentDisplay();
 
@@ -48,7 +49,7 @@ function createMainWindow() {
       webSecurity: false,
     },
   });
-  createTray({
+  mainTray = createTray({
     menus: [
       {
         label: "Show Window",
@@ -80,7 +81,6 @@ function createMainWindow() {
   mainBrowserWindow.loadURL(LOAD_URL);
 }
 
-
 onWindowDrag();
 onExternalUrlOpen();
 
@@ -91,22 +91,15 @@ app.whenReady().then(() => {
   }
 });
 
+registerUrlScheme(() => mainBrowserWindow);
 
 app.on("window-all-closed", () => {
   mainBrowserWindow = null;
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  mainTray?.destroy();
+  app.quit();
 });
-
-app.on("second-instance", () => {
-  if (mainBrowserWindow) {
-    // Focus on the main window if the user tried to open another
-    if (mainBrowserWindow.isMinimized()) {
-      mainBrowserWindow.restore();
-    }
-    mainBrowserWindow.focus();
-  }
+app.on("before-quit", () => {
+  mainTray?.destroy();
 });
 
 app.on("activate", () => {
