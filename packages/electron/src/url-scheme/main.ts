@@ -3,7 +3,7 @@ import { BrowserWindow, app } from "electron";
 import { URL_SCHEME_CHANNELS } from "./types";
 
 const PROTOCOL = "revealing";
-export function registerUrlScheme(getMainWindow: () => BrowserWindow | null) {
+export function registerUrlScheme(mainWindow: BrowserWindow) {
   app.on("ready", () => {
     if (!app.isPackaged && process.platform === "win32") {
       app.removeAsDefaultProtocolClient(PROTOCOL, process.execPath, [
@@ -22,10 +22,11 @@ export function registerUrlScheme(getMainWindow: () => BrowserWindow | null) {
     }
   });
 
+  // 当点击自定义 url scheme 时，会触发 second-instance 事件
   app.on("second-instance", (_e, commandLine) => {
     const url = commandLine.pop();
     if (url) {
-      handleCustomUrl(url, getMainWindow());
+      handleCustomUrl(url, mainWindow);
     }
   });
 }
