@@ -3,8 +3,9 @@ import { createIPCHandler } from "@revealing/trpc/main";
 import {
   ignoreMouseEvents,
   onExternalUrlOpen,
-  onWindowDrag,
   registerUrlScheme,
+  mainWindowDisableClick,
+  listenMemoWindowOpen
 } from "@revealing/electron/main";
 import { appRouter } from "@revealing/api";
 import { ICON_PATH, PRELOAD_PATH } from "./libs/filepath";
@@ -23,7 +24,9 @@ if (!app.requestSingleInstanceLock()) {
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 let mainBrowserWindow: BrowserWindow | null = null;
+let memoWin: BrowserWindow | null = null;
 let mainTray: Tray | null = null;
+let ipcHandler: ReturnType<typeof createIPCHandler>;
 function createMainWindow() {
   const currentDisplay = getCurrentDisplay();
 
@@ -49,6 +52,7 @@ function createMainWindow() {
       webSecurity: false,
     },
   });
+
   mainTray = createTray({
     menus: [
       {
@@ -73,7 +77,7 @@ function createMainWindow() {
     ],
   });
 
-  createIPCHandler({
+  ipcHandler = createIPCHandler({
     router: appRouter,
     windows: [mainBrowserWindow],
   });
@@ -81,7 +85,51 @@ function createMainWindow() {
   mainBrowserWindow.loadURL(LOAD_URL);
 }
 
-onWindowDrag();
+function createMemoWindow() {
+  if (memoWin) {
+    memoWin.show();
+    return
+  }
+
+  memoWin = new BrowserWindow({
+    width: 800,
+    height: 600,
+    title: "Memo",
+    icon: ICON_PATH,
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: PRELOAD_PATH,
+      nodeIntegration: true,
+      contextIsolation: false,
+      webSecurity: false,
+    },
+  });
+
+  ipcHandler?.attachWindow(memoWin);
+
+  // 由于主窗口是在最上层的
+  // 所以在 memo 窗口聚焦时
+  // 为了可以点击到 memo 窗口，需要主窗口忽略鼠标事件
+  memoWin.on("focus", () => {
+    if (mainBrowserWindow) {
+      mainWindowDisableClick(mainBrowserWindow)
+    }
+  })
+
+  // 如果 memo 窗口失去焦点
+  // 那么主窗口的应该忽略鼠标事件（默认状态）
+  // 为了可以点击桌面的其他元素
+  memoWin.on("blur", () => {
+    if (mainBrowserWindow) {
+      mainWindowDisableClick(mainBrowserWindow)
+    }
+  })
+
+  memoWin.loadURL(`${LOAD_URL}#/memo`);
+
+  return memoWin;
+}
+
 onExternalUrlOpen();
 
 app.whenReady().then(() => {
@@ -90,6 +138,10 @@ app.whenReady().then(() => {
     ignoreMouseEvents(mainBrowserWindow);
   }
 });
+
+listenMemoWindowOpen(() => {
+  createMemoWindow();
+})
 
 registerUrlScheme(() => mainBrowserWindow);
 
