@@ -10,3 +10,5 @@ export const schema = {
 const connection = createConnection(config.dbCredentials);
 
 export const db = drizzle(connection);
+
+export * from "drizzle-orm";
