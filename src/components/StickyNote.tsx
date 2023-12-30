@@ -2,12 +2,15 @@ import { cn } from "@/libs/utils";
 import { Clickable } from "@revealing/electron/renderer";
 import { useCallback, useMemo, useState } from "react";
 import { Rnd, RndDragCallback, Props, RndResizeCallback } from "react-rnd";
-
-interface DraggableProps extends Props {}
+import { X } from "lucide-react";
+interface DraggableProps extends Props {
+  title?: string;
+  onClose?: () => void;
+}
 
 const defaultSize: NonNullable<Props["size"]> = {
-  width: 200,
-  height: 200,
+  width: 300,
+  height: 300,
 };
 
 const defaultPosition: NonNullable<Props["position"]> = {
@@ -17,8 +20,11 @@ const defaultPosition: NonNullable<Props["position"]> = {
 
 export default function StickyNote({
   className,
+  title,
   size = defaultSize,
   position = defaultPosition,
+  onClose,
+  children,
   ...props
 }: DraggableProps) {
   const [controlledPosition, setControlledPosition] = useState(position);
@@ -127,7 +133,7 @@ export default function StickyNote({
     <Clickable>
       <Rnd
         className={cn(
-          "bg-red-200 rounded-md shadow-md box-border text-sm hover:shadow-lg",
+          "rounded-xl border bg-card text-card-foreground shadow-md box-border text-sm hover:shadow-lg",
           reachEdge.nearBottom ? "transition-transform duration-200" : "",
           className
         )}
@@ -137,13 +143,24 @@ export default function StickyNote({
         size={controlledSize}
         {...props}
       >
+        {title && (
+          <div
+            className="flex justify-between items-center h-7 rounded-t-md font-bold cursor-pointer px-4"
+            onDoubleClick={onDoubleClick}
+          >
+            <span>{title}</span>
+
+            <X className="w-4 h-4" onClick={onClose} />
+          </div>
+        )}
         <div
-          className="rounded-t-md font-bold  cursor-pointer px-4 h-7 flex items-center"
-          onDoubleClick={onDoubleClick}
+          style={{
+            height: title ? "calc(100% - 32px)" : "100%",
+          }}
+          className="w-full px-4 pb-2 box-border"
         >
-          Title
+          {children}
         </div>
-        <div className=" px-4 pb-2">Content</div>
       </Rnd>
     </Clickable>
   );
