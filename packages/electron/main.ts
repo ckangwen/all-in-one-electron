@@ -4,3 +4,4 @@ export * from "./src/clickable/main";
 export * from "./src/url-scheme/main";
 export * from "./src/memo-window/main";
 export * from "./src/main-window/main";
+export * from "./src/open-command/main";

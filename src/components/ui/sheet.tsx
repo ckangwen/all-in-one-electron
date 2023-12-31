@@ -13,7 +13,12 @@ import {
  * 这样就可以点击 Sheet 中的元素
  * 此外在关闭 Sheet 时，恢复成忽略窗口鼠标事件的状态
  */
-const Sheet: React.FC<SheetPrimitive.DialogProps> = (props) => {
+const Sheet: React.FC<SheetPrimitive.DialogProps> = ({
+  onOpenChange,
+  children,
+  ...props
+}) => {
+  console.log(props)
   return (
     <Clickable>
       <SheetPrimitive.Root
@@ -21,10 +26,11 @@ const Sheet: React.FC<SheetPrimitive.DialogProps> = (props) => {
           if (!open) {
             forceIgnoreWindowMouseEvents();
           }
-          props.onOpenChange?.(open);
+          onOpenChange?.(open);
         }}
+        {...props}
       >
-        {props.children}
+        {children}
       </SheetPrimitive.Root>
     </Clickable>
   );

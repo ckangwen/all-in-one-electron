@@ -5,6 +5,7 @@ import {
   registerExternalUrlOpenEvent,
   registerUrlScheme,
   registerMemoWindowOpenEvent,
+  registerOpenCommandShortcut,
   createMainWindow,
   createMemoWindow,
 } from "@revealing/electron/main";
@@ -29,6 +30,7 @@ app.whenReady().then(() => {
 
     registerWindowMouseEvents(mainWindow);
     registerUrlScheme(mainWindow);
+    registerOpenCommandShortcut(mainWindow);
   }
 
   registerExternalUrlOpenEvent();
@@ -37,7 +39,6 @@ app.whenReady().then(() => {
     ipcHandler?.attachWindow(window);
   });
 });
-
 
 app.on("before-quit", () => {
   // 销毁所有 BrowserWindow 实例
