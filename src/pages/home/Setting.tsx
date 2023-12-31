@@ -1,11 +1,7 @@
 import { Settings2 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { trpcReact } from "@revealing/trpc/renderer";
 
 export default function Setting() {
-  const { data } = trpcReact.siYuan.randomBookmark.useQuery();
-
-  console.log(data);
 
   return (
     <Sheet>

@@ -18,7 +18,6 @@ const Sheet: React.FC<SheetPrimitive.DialogProps> = ({
   children,
   ...props
 }) => {
-  console.log(props)
   return (
     <Clickable>
       <SheetPrimitive.Root

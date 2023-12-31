@@ -3,7 +3,7 @@ import { siYuanRouter } from "./router/siyuan";
 import { memoRouter } from "./router/memo";
 
 export const appRouter = createTRPCRouter({
-  siYuan: siYuanRouter,
+  siyuan: siYuanRouter,
   memo: memoRouter,
 });
 

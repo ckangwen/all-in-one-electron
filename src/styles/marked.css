@@ -1,0 +1,72 @@
+.revealing-h1 {
+  @apply mt-2 scroll-m-20 text-4xl font-bold tracking-tight;
+}
+
+.revealing-h2 {
+  @apply mt-2 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0;
+}
+
+.revealing-h3 {
+  @apply mt-2 scroll-m-20 text-2xl font-semibold tracking-tight;
+}
+
+.revealing-h4 {
+  @apply mt-2 scroll-m-20 text-xl font-semibold tracking-tight;
+}
+
+.revealing-h5 {
+  @apply mt-2 scroll-m-20 text-lg font-semibold tracking-tight;
+}
+
+.revealing-h6 {
+  @apply mt-2 scroll-m-20 text-base font-semibold tracking-tight;
+}
+
+.revealing-a {
+  @apply font-medium underline underline-offset-4;
+}
+
+.revealing-p {
+  /* @apply leading-7 [&:not(:first-child)]:mt-6; */
+  @apply leading-7 [&:not(:first-child)]:mt-2;
+}
+
+.revealing-ul {
+  @apply my-2 ml-2 list-disc;
+}
+.revealing-ol {
+  @apply my-2 ml-2 list-decimal;
+}
+.revealing-li {
+  @apply mt-2;
+}
+.revealing-blockquote {
+  @apply mt-2 border-l-2 pl-6 italic [&>*]:text-muted-foreground;
+}
+.revealing-img {
+  @apply rounded-md border;
+}
+.revealing-hr {
+  @apply my-2;
+}
+.revealing-revealing-table-container {
+  @apply my-2 w-full overflow-y-auto;
+}
+.revealing-table {
+  @apply w-full;
+}
+.revealing-tr {
+  @apply m-0 border-t p-0 even:bg-muted;
+}
+.revealing-th {
+  @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+.revealing-td {
+  @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+.revealing-pre {
+  @apply mb-2 mt-2 overflow-x-auto rounded-lg border bg-black py-4;
+}
+.revealing-code {
+  @apply relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm;
+}

@@ -14,7 +14,8 @@ export const memoRouter = createTRPCRouter({
       .select()
       .from(schema.memo)
       .where(eq(schema.memo.id, input))
-      .limit(1);
+      .limit(1)
+      .then((res) => res[0]);
   }),
   create: procedure.input(createMemoParams).mutation(({ input }) => {
     return db.insert(schema.memo).values(input);
