@@ -1,4 +1,4 @@
-import { Clickable, openMemoWindow } from "@revealing/electron/renderer";
+import { Clickable, openMemoWindow, openWeReadWindow } from "@revealing/electron/renderer";
 import { cn } from "@/libs/utils";
 import Setting from "./Setting";
 import { BrainCircuit, CalendarCheck } from "lucide-react";
@@ -34,6 +34,10 @@ export default function Menubar() {
     });
   }, [setStickyTextareaVisible, toast]);
 
+  const onShowWeRead = useCallback(() => {
+    openWeReadWindow()
+  }, [])
+
   return (
     <Clickable
       className={cn([
@@ -54,6 +58,12 @@ export default function Menubar() {
           onClick={onClick}
         >
           <CalendarCheck className="w-4 h-4" />
+        </div>
+        <div
+          className="p-1 text-xs rounded-full cursor-pointer select-none"
+          onClick={onShowWeRead}
+        >
+          <img className="w-4 h-4" src="https://rescdn.qqmail.com/node/wr/wrpage/style/images/independent/favicon/favicon_32h.png" />
         </div>
       </div>
     </Clickable>

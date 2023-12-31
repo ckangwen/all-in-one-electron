@@ -6,8 +6,10 @@ import {
   registerUrlScheme,
   registerMemoWindowOpenEvent,
   registerOpenCommandShortcut,
+  registerWeReadOpenEvent,
   createMainWindow,
   createMemoWindow,
+  createWeReadWindow,
 } from "@revealing/electron/main";
 import { appRouter } from "@revealing/api";
 
@@ -34,6 +36,9 @@ app.whenReady().then(() => {
   }
 
   registerExternalUrlOpenEvent();
+  registerWeReadOpenEvent(() => {
+    createWeReadWindow();
+  });
   registerMemoWindowOpenEvent(() => {
     const { window } = createMemoWindow();
     ipcHandler?.attachWindow(window);

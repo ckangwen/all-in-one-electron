@@ -11,6 +11,7 @@ export const PUBLIC_PATH = process.env.VITE_DEV_SERVER_URL
   : DIST_PATH;
 
 export const ICON_PATH = join(PUBLIC_PATH, "./icons/icon.ico");
+export const WEREAD_ICON_PATH = join(PUBLIC_PATH, "./icons/weread.ico");
 export const INDEX_HTML_PATH = join(DIST_PATH, "./index.html");
 
 export const LOAD_URL = app.isPackaged
