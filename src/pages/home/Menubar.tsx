@@ -1,11 +1,17 @@
-import { Clickable, openMemoWindow, openWeReadWindow } from "@revealing/electron/renderer";
+import {
+  Clickable,
+  openMemoWindow,
+  openWeReadWindow,
+} from "@revealing/electron/renderer";
 import { cn } from "@/libs/utils";
-import Setting from "./Setting";
 import { BrainCircuit, CalendarCheck } from "lucide-react";
 import { useCallback } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useSetStickyTextareaState } from "@/store/sticky-textarea";
+import Tooltip from "@/components/Tooltip";
+import { useSetDiaryState } from "@/store/diary";
+
 export default function Menubar() {
   const onOpenMemoWindow = useCallback(() => {
     openMemoWindow();
@@ -35,8 +41,13 @@ export default function Menubar() {
   }, [setStickyTextareaVisible, toast]);
 
   const onShowWeRead = useCallback(() => {
-    openWeReadWindow()
-  }, [])
+    openWeReadWindow();
+  }, []);
+
+  const setDailyNoteState = useSetDiaryState();
+  const onOpenDailyNote = useCallback(() => {
+    setDailyNoteState({ visible: true });
+  }, [setDailyNoteState]);
 
   return (
     <Clickable
@@ -46,24 +57,30 @@ export default function Menubar() {
       ])}
     >
       <div className="flex items-center gap-4 w-full h-8 shadow-lg bg-white px-4 rounded-t-none rounded-b-md">
-        <Setting />
         <div
           className="bg-primary text-primary-foreground p-1 text-xs rounded-full cursor-pointer select-none hover:bg-primary/80"
           onClick={onOpenMemoWindow}
         >
           <BrainCircuit className="w-4 h-4" />
         </div>
-        <div
-          className="bg-primary text-primary-foreground p-1 text-xs rounded-full cursor-pointer select-none hover:bg-primary/80"
-          onClick={onClick}
-        >
-          <CalendarCheck className="w-4 h-4" />
-        </div>
+
+        <Tooltip message="日记">
+          <div
+            className="bg-primary text-primary-foreground p-1 text-xs rounded-full cursor-pointer select-none hover:bg-primary/80"
+            onClick={onOpenDailyNote}
+          >
+            <CalendarCheck className="w-4 h-4" />
+          </div>
+        </Tooltip>
+
         <div
           className="p-1 text-xs rounded-full cursor-pointer select-none"
           onClick={onShowWeRead}
         >
-          <img className="w-4 h-4" src="https://rescdn.qqmail.com/node/wr/wrpage/style/images/independent/favicon/favicon_32h.png" />
+          <img
+            className="w-4 h-4"
+            src="https://rescdn.qqmail.com/node/wr/wrpage/style/images/independent/favicon/favicon_32h.png"
+          />
         </div>
       </div>
     </Clickable>

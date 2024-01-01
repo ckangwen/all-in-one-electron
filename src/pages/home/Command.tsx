@@ -73,7 +73,7 @@ export default function AppCommand() {
                   </CommandItem>
                 ))}
               </CommandGroup>
-              {idx === commandOptions.length - 1 ? null : <CommandSeparator />}
+              {idx === commandOptions.length - 1 ? null : <CommandSeparator key={option.heading} />}
             </>
           ))}
         </ScrollArea>

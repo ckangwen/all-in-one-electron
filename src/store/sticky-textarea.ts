@@ -4,7 +4,8 @@ interface StickyTextareaState {
   visible: boolean;
   title: string;
 }
-export const stickyTextareaStateAtom = atom<StickyTextareaState>({
+
+const stickyTextareaStateAtom = atom<StickyTextareaState>({
   visible: false,
   title: "",
 });
